@@ -76,7 +76,17 @@ class FunctionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         else{
                             return
                         }
-                        self.result.text = "Result: " + String(x)
+                        
+                        let numberFormatter = NumberFormatter()
+                        numberFormatter.numberStyle = .decimal
+                        self.result.text = numberFormatter.string(from: NSNumber(value:x))
+                        if (function == 0){
+                            self.result!.text! += " m"
+                        }
+                        else if (function == 1){
+                            self.result!.text! += " °"
+                        }
+                        
                         self.submitButton.isEnabled = true
                         
                     } catch {

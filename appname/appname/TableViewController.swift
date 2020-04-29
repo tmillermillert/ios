@@ -62,10 +62,7 @@ class TableViewController: UITableViewController {
             self.getNames()})
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-    }
+
     
 
     // MARK: - Table view data source
@@ -157,16 +154,8 @@ class TableViewController: UITableViewController {
         source.pd.addressTitle = source.addressTitleTF.text ?? ""
         
         source.addressStreetTF.text = source.addressStreetTF.text ?? " "
-        source.cityTF.text = source.cityTF.text ?? " "
-        source.stateTF.text = source.stateTF.text ?? " "
-        source.zipCodeTF.text = source.zipCodeTF.text ?? " "
-        source.countryTF.text = source.countryTF.text ?? " "
         
         source.pd.addressStreet = source.addressStreetTF.text! + "\n"
-        source.pd.addressStreet += source.cityTF.text! + "\n"
-        source.pd.addressStreet += source.stateTF.text! + "\n"
-        source.pd.addressStreet += source.zipCodeTF.text! + "\n"
-        source.pd.addressStreet += source.countryTF.text!
         source.pd.elevation = Double(source.elevationTF.text ?? "") ?? 0
         source.pd.latitude = Double(source.latitudeTF.text ?? "") ?? 0
         source.pd.longitude = Double(source.longitudeTF.text ?? "") ?? 0

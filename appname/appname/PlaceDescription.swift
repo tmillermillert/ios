@@ -60,9 +60,8 @@ class PlaceDescription {
         let Δφ: Double = (pd2.latitude-pd1.latitude) * .pi / 180;
         let Δλ: Double = (pd2.longitude-pd1.longitude) * .pi / 180;
 
-        let tmp: Double = sin(Δφ/2) * sin(Δφ/2)
-        let tmp2: Double = tmp + cos(φ1) * cos(φ2)
-        let a: Double = tmp2 * sin(Δλ/2) * sin(Δλ/2);
+        let a: Double = sin(Δφ/2) * sin(Δφ/2) +
+        cos(φ1) * cos(φ2) * sin(Δλ/2) * sin(Δλ/2);
         let c: Double = 2 * atan2(a.squareRoot(), (1-a).squareRoot())
 
         let d = R * c;
@@ -77,8 +76,13 @@ class PlaceDescription {
         let y = sin(λ2 - λ1) * cos(φ2);
         let x = cos(φ1) * sin(φ2) -
                 sin(φ1) * cos(φ2) * cos(λ2-λ1);
-        let brng = atan2(y, x) * 180 / .pi;
-        return brng
+        let θ = atan2(y, x)
+        let brng = (θ * 180 / .pi + 360)
+        var brng2 = brng
+        while(brng2 > 360){
+            brng2 -= 360
+        }
+        return brng2
     }
     
     init (jsonStr: String){

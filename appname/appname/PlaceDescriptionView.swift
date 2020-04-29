@@ -20,10 +20,7 @@ class PlaceDescriptionView: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var categoryTF: UITextField!
     @IBOutlet weak var addressTitleTF: UITextField!
     @IBOutlet weak var addressStreetTF: UITextField!
-    @IBOutlet weak var cityTF: UITextField!
-    @IBOutlet weak var stateTF: UITextField!
-    @IBOutlet weak var countryTF: UITextField!
-    @IBOutlet weak var zipCodeTF: UITextField!
+
     @IBOutlet weak var elevationTF: UITextField!
     @IBOutlet weak var latitudeTF: UITextField!
     @IBOutlet weak var longitudeTF: UITextField!
@@ -72,42 +69,8 @@ class PlaceDescriptionView: UIViewController, UINavigationControllerDelegate {
                         self.descriptionTF.text = self.pd.description
                         self.categoryTF.text = self.pd.category
                         self.addressTitleTF.text = self.pd.addressTitle
-                        let addressStreetSplit = self.pd.addressStreet.split(separator: "\n")
-                        switch addressStreetSplit.count{
-                        case 4:
-                            self.zipCodeTF.text = String(addressStreetSplit[3])
-                            self.stateTF.text = String(addressStreetSplit[2])
-                            self.cityTF.text = String(addressStreetSplit[1])
-                            self.addressStreetTF.text = String(addressStreetSplit[0])
-                        case 3:
-                            self.zipCodeTF.text = ""
-                            self.stateTF.text = String(addressStreetSplit[2])
-                            self.cityTF.text = String(addressStreetSplit[1])
-                            self.addressStreetTF.text = String(addressStreetSplit[0])
-                        case 2:
-                            self.zipCodeTF.text = ""
-                            self.stateTF.text = ""
-                            self.cityTF.text = String(addressStreetSplit[1])
-                            self.addressStreetTF.text = String(addressStreetSplit[0])
-                        case 1:
-                            self.zipCodeTF.text = ""
-                            self.stateTF.text = ""
-                            self.cityTF.text = ""
-                            self.addressStreetTF.text = String(addressStreetSplit[0])
-                        default:
-                            self.zipCodeTF.text = ""
-                            self.stateTF.text = ""
-                            self.cityTF.text = ""
-                            self.addressStreetTF.text = ""
-                        }
+                        self.addressStreetTF.text = self.pd.addressStreet
                         
-                        
-                        if(addressStreetSplit.count == 5){
-                            self.countryTF.text = String(addressStreetSplit[4])
-                        }
-                        else{
-                            self.countryTF.text = "USA"
-                        }
                         self.elevationTF.text = String(self.pd.elevation)
                         self.latitudeTF.text = String(self.pd.latitude)
                         self.longitudeTF.text = String(self.pd.longitude)
@@ -120,10 +83,11 @@ class PlaceDescriptionView: UIViewController, UINavigationControllerDelegate {
         })
     }
     
-    func addPlace(place:PlaceDescription){
+    func addPlace(place:PlaceDescription, viewController:TableViewController){
         let aConnect:PlaceLibraryStub = PlaceLibraryStub(urlString: self.urlString)
         let _:Bool = aConnect.add(place: place,callback: { _,_  in
             print("\(place.name) added as: \(place.toJsonString())")
+            viewController.getNames()
         })
     }
     
@@ -144,21 +108,19 @@ class PlaceDescriptionView: UIViewController, UINavigationControllerDelegate {
         
         if let controller = viewController as? TableViewController {
             
-            pd.name = nameTF.text ?? ""
+            guard let name = nameTF.text else{
+                return
+            }
+            pd.name = name
             pd.description = descriptionTF.text ?? ""
             pd.category = categoryTF.text ?? ""
             pd.addressTitle = addressTitleTF.text ?? ""
-            var tmp : String? = addressStreetTF.text ?? "\n"
-            tmp! += cityTF.text! + "\n"
-            tmp! += stateTF.text! + "\n"
-            tmp! += zipCodeTF.text! + "\n"
-            tmp! += countryTF.text!
-            pd.addressStreet = tmp!
+            pd.addressStreet = addressStreetTF.text ?? ""
             pd.elevation = Double(elevationTF.text ?? "") ?? 0
             pd.latitude = Double(latitudeTF.text ?? "") ?? 0
             pd.longitude = Double(longitudeTF.text ?? "") ?? 0
             deletePlace(place: placeName)
-            addPlace(place: pd)
+            addPlace(place: pd, viewController: controller)
             
         }
         
