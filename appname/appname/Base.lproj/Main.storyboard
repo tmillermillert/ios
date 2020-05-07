@@ -166,16 +166,30 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Places Library" id="gur-UB-E8H">
-                        <barButtonItem key="leftBarButtonItem" title="Great Circle" image="globe" catalog="system" id="AOG-GM-goz">
-                            <connections>
-                                <segue destination="bFd-y6-XVh" kind="show" identifier="function" id="oVt-3M-jKB"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="e9g-hR-K4c">
-                            <connections>
-                                <segue destination="BYZ-38-t0r" kind="presentation" identifier="addPlace" id="Iwc-ue-DrL"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem title="Great Circle" image="globe" catalog="system" id="AOG-GM-goz">
+                                <connections>
+                                    <segue destination="bFd-y6-XVh" kind="show" identifier="function" id="oVt-3M-jKB"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="save" id="EIg-fM-1Ls">
+                                <connections>
+                                    <action selector="saveJsonRPCServer:" destination="Rdl-K6-lcw" id="0Ff-44-XjS"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="e9g-hR-K4c">
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="addPlace" id="Iwc-ue-DrL"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Reset" id="4BM-hD-f91">
+                                <connections>
+                                    <action selector="resetJsonRPCServer:" destination="Rdl-K6-lcw" id="Znx-jC-gzf"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sYh-aC-UfF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

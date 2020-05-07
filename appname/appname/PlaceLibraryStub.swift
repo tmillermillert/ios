@@ -13,19 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Purpose: Swift Client for a Java student collection JsonRPC server.
+ * Purpose: Swift Client for a Java place description collection JsonRPC server.
  *
  * @author Marcus Miller mtmille5@asu.edu
  * @version April, 2020
- 
- public String[] getNames();          //get a string array of titles kwown to the server
- public boolean resetFromJsonFile();  //reset the library to its original contents
- public boolean saveToJsonFile();     //save the library to a json file
- public String[] getCategoryNames();  //get category names for library places
- public boolean add(Item anItem);     //add a new place to the library
- public PlaceDescription get(String aName);       //get the named place
- public boolean remove(String aName); //remove the place named
- public String[] getNamesInCategory(String aCat); //get place names within a category
  */
 
 import Foundation

@@ -1,10 +1,25 @@
-//
-//  TableViewController.swift
-//  appname
-//
-//  Created by Marcus Tanner Miller on 4/9/20.
-//  Copyright © 2020 Marcus Tanner Miller. All rights reserved.
-//
+/*
+* Copyright 2020 Marcus Miller,
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+* Purpose: Main menu view to display place descriptions. Click on a list item to modify a place description. Click on the plus menu option to add a place description. Click on the navigation menu item to calculate the Great Circle Sperical Distance and Initial Heading. Swipe a list item to delete that item. The place JSONRPC server must be running.
+*
+* Ser423 Mobile Applications
+* see http://pooh.poly.asu.edu/Mobile
+* @author Marcus Miller mailto:mtmille5@asu.edu
+* @version April 2020
+*/
 
 import UIKit
 
@@ -140,7 +155,16 @@ class TableViewController: UITableViewController {
         }
     }
     
-
+    @IBAction func resetJsonRPCServer(_ sender: Any) {
+        let aConnect:PlaceLibraryStub = PlaceLibraryStub(urlString: self.urlString)
+        let _:Bool = aConnect.resetFromJsonFile(callback: { _,_  in self.getNames()})
+    }
+    
+    @IBAction func saveJsonRPCServer(_ sender: Any) {
+        let aConnect:PlaceLibraryStub = PlaceLibraryStub(urlString: self.urlString)
+        let _:Bool = aConnect.saveToJsonFile(callback: {_,_  in return true})
+    }
+    
     @IBAction func unwindToTable(segue: UIStoryboardSegue){
         let viewController = segue.destination as! TableViewController
         let source = segue.source as! PlaceDescriptionView
